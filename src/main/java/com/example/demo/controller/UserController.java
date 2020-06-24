@@ -1,9 +1,5 @@
 package com.example.demo.controller;
 
-
-import com.auth0.jwt.JWT;
-import com.example.demo.Anotation.PassToken;
-import com.example.demo.Anotation.UserLoginToken;
 import com.example.demo.domain.User;
 import com.example.demo.result.ExceptionMsg;
 import com.example.demo.result.ResponseData;
@@ -57,7 +53,6 @@ public class UserController {
         else
             return new ResponseData(ExceptionMsg.FAILED, "注册失败,密码不能为空");
     }
-    @PassToken
     @PostMapping(value = "/download")
     public ResponseData download(){
         String place="src/main/resources/static/";

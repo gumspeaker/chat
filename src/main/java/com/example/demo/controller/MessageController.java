@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 import com.auth0.jwt.JWT;
-import com.example.demo.Anotation.PassToken;
-import com.example.demo.Anotation.UserLoginToken;
 import com.example.demo.domain.Message;
 import com.example.demo.result.ExceptionMsg;
 import com.example.demo.result.ResponseData;
@@ -24,7 +22,7 @@ import java.util.List;
 public class MessageController {
     @Autowired
     MessageService messageService;
-    @UserLoginToken
+
     @PostMapping("/uploadImage")
     public ResponseData handleFileUpload(@RequestParam(value = "file") MultipartFile file, HttpServletRequest req) throws IOException {
         String token =req.getHeader("token");
@@ -44,7 +42,7 @@ public class MessageController {
             return new ResponseData(ExceptionMsg.FAILED,result[1]);
 
     }
-    @UserLoginToken
+
     @GetMapping("/getNewMessage")
     public ResponseData getNewMessage(@RequestParam(value = "page") int page){
         List<Message> messages =messageService.getMessageNew(page);
@@ -52,7 +50,7 @@ public class MessageController {
             return new ResponseData(ExceptionMsg.SUCCESS,"没有消息了");
         return new ResponseData(ExceptionMsg.SUCCESS,messages);
     }
-    @UserLoginToken
+
     @PostMapping("/sendMessage")
     public ResponseData sendMessage(@RequestParam(value = "body") String body, HttpServletRequest request){
         String token=request.getHeader("token");
@@ -63,7 +61,7 @@ public class MessageController {
         else
             return new ResponseData(ExceptionMsg.FAILED,"发送失败");
     }
-    @UserLoginToken
+
     @PostMapping("/deleteMessage")
     public ResponseData sendMessage(@RequestParam(value = "messageId") int messageId ){
         if (messageService.deleteMessage(messageId))
