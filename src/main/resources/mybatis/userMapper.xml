@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.UserDao">
+    <resultMap id="user" type="com.example.demo.domain.User">
+        <id column="user_id" property="id"></id>
+        <result column="user_name" property="username"></result>
+        <result column="user_password" property="password"></result>
+        <result column="user_photo" property="photo"></result>
+        <result column="user_phone" property="userPhone"></result>
+        <result column="user_role" property="role"></result>
+    </resultMap>
+    <select id="findAll" resultMap="user">
+        select * from user;
+    </select>
+
+    <select id="findUserById" resultMap="user">
+        select * from user where id = #{id};
+    </select>
+    <select id="Login" resultMap="user">
+        select user_id,user_name,user_password,user_photo,user_phone,user_role from user where user_name=#{userName} and user_password=#{passWord};
+    </select>
+    <select id="FindUserByUserName" resultMap="user">
+        select user_id,user_name,user_password,user_photo,user_phone,user_role from user where user_name = #{userName};
+    </select>
+    <insert id="addUser">
+        insert into user (user_name,user_password) values (#{username},#{password});
+    </insert>
+    <select id="isExistedUser" resultType="boolean">
+        select count(user_name) from user where user_name =#{userName};
+    </select>
+
+</mapper>

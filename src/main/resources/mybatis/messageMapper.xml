@@ -1,0 +1,28 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.MessageDao">
+    <resultMap id="message" type="com.example.demo.domain.Message">
+        <id property="id" column="message_id"></id>
+        <result property="body" column="message_body"></result>
+        <result property="date" column="message_date"></result>
+        <result property="owner" column="message_owner"></result>
+        <result property="deleted" column="message_deleted"></result>
+        <result property="type" column="message_type"></result>
+    </resultMap>
+    <sql id="all">
+        message_id,message_body,message_date,message_owner,message_deleted,message_type
+    </sql>
+    <insert id="addMessage" >
+        insert into message(message_body,message_date,message_owner,message_deleted,message_type) values (#{body},#{date},#{owner},0,#{type});
+    </insert>
+    <select id="GetUserMessage" resultMap="message">
+        select <include refid="all"></include> from message where message_owner=#{userName} and message_deleted=0;
+    </select>
+    <update id="deleteMessage">
+        update   message set message_deleted=1 where message_id=#{messageId} ;
+    </update>
+    <select id="GetNewMessage" resultMap="message">
+        select <include refid="all"></include>from message where message_deleted=0 order by message_date desc limit #{Begin},#{pageSize} ;
+    </select>
+</mapper>
