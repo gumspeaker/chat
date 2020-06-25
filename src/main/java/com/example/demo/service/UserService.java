@@ -10,4 +10,5 @@ public interface UserService {
     User GetUserById(BigInteger id);
     User GetUserByName(String Name);
     Boolean addUser(User user);
+    String getUserPassword(String username);
 }

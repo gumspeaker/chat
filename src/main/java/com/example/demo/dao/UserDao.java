@@ -44,4 +44,5 @@ public interface UserDao {
     User FindUserByUserName (String userName);
     boolean addUser(User user);
     Boolean isExistedUser(String Username);
+    String getUserPassword(String username);
 }

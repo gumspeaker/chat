@@ -35,4 +35,9 @@ public class UserServiceImpl implements UserService {
             return false;
         return userdao.addUser(user);
     }
+
+    @Override
+    public String getUserPassword(String username) {
+            return userdao.getUserPassword(username);
+    }
 }
