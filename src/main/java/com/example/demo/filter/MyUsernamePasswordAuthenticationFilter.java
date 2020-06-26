@@ -2,6 +2,7 @@ package com.example.demo.filter;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.Assert;
@@ -34,29 +37,27 @@ public class MyUsernamePasswordAuthenticationFilter extends AbstractAuthenticati
 	}
 
 	@Override
-	public Authentication attemptAuthentication(HttpRequest request, HttpServletResponse response)
+	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
-//		String body = StreamUtils.copyToString(request.getInputStream(), Charset.forName("UTF-8"));
-//		System.out.println(body);
-//		String username = null, password = null;
-//		if(StringUtils.hasText(body)) {
-//		    JSONObject jsonObj = JSON.parseObject(body);
-//		    username = jsonObj.getString("username");
-//		    password = jsonObj.getString("password");
+		//String body = StreamUtils.copyToString(request.getInputStream(), Charset.forName("UTF-8"));
+		//System.out.println(body);
+////		System.out.println(request.getParameterMap());
+//		Map<String, String[]> map=request.getParameterMap();
+//		for(String key : map.keySet()){
+//			String[] value = map.get(key);
+//			System.out.println(key+":"+value);
 //		}
-		String username = null, password = null;
-		username=request.getHeader("username");
-		password=request.getHeader("password");
+		Map<String,String[]> map= request.getParameterMap();
+		String username = map.get("username")[0], password = map.get("password")[0];
 		if (username == null) 
 			username = "";
 		if (password == null)
 			password = "";
-		username = username.trim();
+		//username = username.trim();
 
 		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
 				username, password);
 		
 		return this.getAuthenticationManager().authenticate(authRequest);
 	}
-
 }

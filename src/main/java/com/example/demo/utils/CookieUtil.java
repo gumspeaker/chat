@@ -1,10 +1,9 @@
 package com.example.demo.utils;
 
-import com.example.demo.domain.User;
+import com.example.demo.domain.ChatUser;
 import com.example.demo.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -58,8 +57,8 @@ public class CookieUtil {
                         }
                     }
                     if (userName != null) {
-                        User user = userService.GetUserByName(userName);
-                        if (user == null) {
+                        ChatUser chatUser = userService.GetUserByName(userName);
+                        if (chatUser == null) {
                             logger.warn("userName " + userName + " is not existed.");
                             userName = null;
                         }

@@ -1,22 +1,33 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.example.demo.domain.ChatUser;
+import com.example.demo.service.Impl.UserServiceImpl;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+
 
 public class JwtUserService implements UserDetailsService{
 	
 	private PasswordEncoder passwordEncoder;
-	
+	private Logger logger=LoggerFactory.getLogger(JwtUserService.class);
+	@Autowired
+	UserService userService;
+
 	public JwtUserService() {
 		this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();  //默认使用 bcrypt， strength=10 
 	}
@@ -39,7 +50,7 @@ public class JwtUserService implements UserDetailsService{
     	 * redisTemplate.opsForValue().set("token:"+username, salt, 3600, TimeUnit.SECONDS);
     	 */   	
 		Algorithm algorithm = Algorithm.HMAC256(salt);
-		Date date = new Date(System.currentTimeMillis()+3600*1000);  //设置1小时后过期
+		Date date = new Date(System.currentTimeMillis()+3600*1000*12*7);  //设置7天后过期
         return JWT.create()
         		.withSubject(user.getUsername())
                 .withExpiresAt(date)
@@ -49,14 +60,19 @@ public class JwtUserService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return User.builder().username("Jack").password(passwordEncoder.encode("jack-password")).roles("USER").build();
+		ChatUser chatUser =userService.GetUserByName(username);
+		if (chatUser==null)
+			throw new UsernameNotFoundException("用户为空");
+		return User.builder().username(chatUser.getUsername()).password(passwordEncoder.encode(chatUser.getPassword())).roles("USER").build();
 	}
-	
-	public void createUser(String username, String password) {
-		String encryptPwd = passwordEncoder.encode(password);
+
+	public Boolean createUser(String username, String password) {
+
+		boolean flag=userService.addUser(new ChatUser(username,password));
 		/**
 		 * @todo 保存用户名和加密后密码到数据库
 		 */
+		return flag;
 	}
 	
 	public void deleteUserLoginInfo(String username) {

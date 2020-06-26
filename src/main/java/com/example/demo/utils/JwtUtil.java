@@ -4,18 +4,15 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.demo.domain.User;
+import com.example.demo.domain.ChatUser;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 public class JwtUtil {
 
 
-    public static String getToken(User user) {
+    public static String getToken(ChatUser chatUser) {
         String token="";
-        token= JWT.create().withAudience(user.getUsername())
-                .sign(Algorithm.HMAC256(user.getPassword()));
+        token= JWT.create().withAudience(chatUser.getUsername())
+                .sign(Algorithm.HMAC256(chatUser.getPassword()));
         return token;
     }
 
@@ -25,9 +22,9 @@ public class JwtUtil {
      * @param **token**
      * @return
      */
-    public static String verify(String token,User user){
+    public static String verify(String token, ChatUser chatUser){
         try {
-            Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
+            Algorithm algorithm = Algorithm.HMAC256(chatUser.getPassword());
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
             String username = jwt.getClaim("username").toString();

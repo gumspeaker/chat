@@ -1,6 +1,6 @@
 package com.example.demo.dao;
 
-import com.example.demo.domain.User;
+import com.example.demo.domain.ChatUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ public interface UserDao {
      *
      * @return
      */
-    List<User> findAll();
+    List<ChatUser> findAll();
 
     /**
      * 通过用户id查询用户
@@ -23,9 +23,9 @@ public interface UserDao {
      * @param id 用户id
      * @return
      */
-    User findUserById(BigInteger id);
+    ChatUser findUserById(BigInteger id);
 
-    List<User> FindAll();
+    List<ChatUser> FindAll();
 
     /**
      *  通过账号密码来登录
@@ -33,7 +33,7 @@ public interface UserDao {
      * @param passWord
      * @return
      */
-    User Login(String userName ,String passWord);
+    ChatUser Login(String userName , String passWord);
 
     /**
      *  通过账号密码来登录
@@ -41,8 +41,8 @@ public interface UserDao {
      *
      * @return
      */
-    User FindUserByUserName (String userName);
-    boolean addUser(User user);
+    ChatUser FindUserByUserName (String userName);
+    boolean addUser(ChatUser chatUser);
     Boolean isExistedUser(String Username);
     String getUserPassword(String username);
 }

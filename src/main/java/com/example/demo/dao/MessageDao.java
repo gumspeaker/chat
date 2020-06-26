@@ -1,8 +1,6 @@
 package com.example.demo.dao;
 
 import com.example.demo.domain.Message;
-import com.example.demo.domain.User;
-import javafx.beans.binding.BooleanExpression;
 import org.apache.ibatis.annotations.Mapper;
 
 import org.springframework.stereotype.Repository;
