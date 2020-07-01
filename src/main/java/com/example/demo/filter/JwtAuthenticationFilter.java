@@ -41,6 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	private AuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
 
 	public JwtAuthenticationFilter() {
+		//拦截header中带Authorization的请求
 		this.requiresAuthenticationRequestMatcher = new RequestHeaderRequestMatcher("Authorization");
 	}
 	
@@ -59,6 +60,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		//header没带token的，直接放过，因为部分url匿名用户也可以访问
+		//如果需要不支持匿名用户的请求没带token，这里放过也没问题，因为SecurityContext中没有认证信息，后面会被权限控制模块拦截
 		if (!requiresAuthentication(request, response)) {
 			filterChain.doFilter(request, response);
 			return;

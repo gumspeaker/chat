@@ -23,8 +23,15 @@ public class JsonLoginSuccessHandler implements AuthenticationSuccessHandler{
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		String token = jwtUserService.saveUserLoginInfo((UserDetails)authentication.getPrincipal());
-		response.setHeader("Authorization", token);
+		String token=null;
+		token=request.getHeader("Authorization");
+		if (token==null){
+		String gettoken = jwtUserService.saveUserLoginInfo((UserDetails)authentication.getPrincipal());
+		response.setHeader("Authorization", gettoken);
+		}
+		else
+			response.setHeader("Authorization", token);
+		response.setCharacterEncoding("utf-8");
 	}
 	
 }

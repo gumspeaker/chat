@@ -25,13 +25,10 @@ public class UserController {
     @ApiOperation(value = "登录",notes = "name和pwd都是字符串")
     public ResponseData login(
             @ApiParam(value = "账号名称") @RequestParam("username") String username,
-            @ApiParam(value = "账号密码")@RequestParam("password") String password,
-            HttpServletResponse response)  {
+            @ApiParam(value = "账号密码")@RequestParam("password") String password)  {
                 ChatUser loginChatUser = userService.Login(username,password);
                 if (loginChatUser !=null) {
-                    String token=JwtUtil.getToken(loginChatUser);
-                    response.addHeader("token", token);
-                    return new ResponseData(ExceptionMsg.SUCCESS, token);
+                    return new ResponseData(ExceptionMsg.SUCCESS, loginChatUser);
                 }
                 else
                     return new ResponseData(ExceptionMsg.FAILED, "error");

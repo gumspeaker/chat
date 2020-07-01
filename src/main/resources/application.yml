@@ -26,5 +26,8 @@ spring:
 debug: true
 logging:
   level:
-    org.springframework.web: DEBUG
+    com.example.controller: DEBUG
+    com.example.config: DEBUG
+  file:
+    path: /usr/local/log/spring.log
 

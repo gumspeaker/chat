@@ -11,7 +11,7 @@
         <result column="user_role" property="role"></result>
     </resultMap>
     <select id="findAll" resultMap="chatUser">
-        select * from chatUser;
+        select * from user;
     </select>
 
     <select id="findUserById" resultMap="chatUser">

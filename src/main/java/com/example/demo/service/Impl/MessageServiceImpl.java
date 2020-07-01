@@ -7,14 +7,17 @@ import com.example.demo.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Service
 public class MessageServiceImpl implements MessageService {
     @Autowired
     MessageDao messageDao;
-
+    String RootPath=commonData.RootPath;
     @Override
     public List<Message> getMessageNew(int Begin) {
         List<Message> recentlyMessage = null;

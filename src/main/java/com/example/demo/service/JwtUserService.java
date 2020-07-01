@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.example.demo.domain.ChatUser;
 import com.example.demo.service.Impl.UserServiceImpl;
+import com.example.demo.utils.JwtUtil;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,13 +50,14 @@ public class JwtUserService implements UserDetailsService{
     	 * @todo 将salt保存到数据库或者缓存中
     	 * redisTemplate.opsForValue().set("token:"+username, salt, 3600, TimeUnit.SECONDS);
     	 */   	
-		Algorithm algorithm = Algorithm.HMAC256(salt);
-		Date date = new Date(System.currentTimeMillis()+3600*1000*12*7);  //设置7天后过期
-        return JWT.create()
-        		.withSubject(user.getUsername())
-                .withExpiresAt(date)
-                .withIssuedAt(new Date())
-                .sign(algorithm);
+		String username=user.getUsername();
+		;  //设置7天后过期
+//        return JWT.create()
+//        		.withSubject(user.getUsername())
+//                .withExpiresAt(date)
+//                .withIssuedAt(new Date())
+//                .sign(algorithm);
+		return JwtUtil.getToken(user);
 	}
 
 	@Override

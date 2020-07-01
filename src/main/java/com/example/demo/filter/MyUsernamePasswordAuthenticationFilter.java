@@ -57,7 +57,7 @@ public class MyUsernamePasswordAuthenticationFilter extends AbstractAuthenticati
 
 		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
 				username, password);
-		
+		response.setCharacterEncoding("utf-8");
 		return this.getAuthenticationManager().authenticate(authRequest);
 	}
 }

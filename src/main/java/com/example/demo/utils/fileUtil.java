@@ -30,6 +30,6 @@ public class fileUtil {
             }
 
         }
-        return new String[]{"上传成功",fileName};
+        return new String[]{"上传成功",newName};
     }
 }
