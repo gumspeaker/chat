@@ -19,8 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
     @Autowired
     UserService userService;
-    @Autowired
-    JwtUserService jwtUserService;
     @PostMapping(value = "/login")
     @ApiOperation(value = "登录",notes = "name和pwd都是字符串")
     public ResponseData login(
@@ -41,7 +39,8 @@ public class UserController {
             @ApiParam(value = "账号密码")@RequestParam("password") String password,
             HttpServletResponse response)  {
         if (username!=null&&password!=null) {
-            Boolean sign = jwtUserService.createUser(username, password);
+            ChatUser newUser=new ChatUser(username,password);
+            Boolean sign = userService.addUser(newUser);
             if (sign == true) {
                 return new ResponseData(ExceptionMsg.SUCCESS, "注册成功");
             }
