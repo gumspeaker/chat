@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import java.util.Calendar;
 
-import com.example.demo.config.JwtAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;

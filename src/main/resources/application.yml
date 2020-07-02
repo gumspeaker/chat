@@ -30,4 +30,3 @@ logging:
     com.example.config: DEBUG
   file:
     path: /usr/local/log/spring.log
-
