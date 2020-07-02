@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.domain.ChatUser;
 
+import java.util.List;
 import java.math.BigInteger;
 
 public interface UserService {
@@ -11,4 +12,5 @@ public interface UserService {
     ChatUser GetUserByName(String Name);
     Boolean addUser(ChatUser chatUser);
     String getUserPassword(String username);
+    List<ChatUser> findAllUser();
 }

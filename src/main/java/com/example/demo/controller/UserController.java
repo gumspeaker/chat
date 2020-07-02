@@ -5,10 +5,11 @@ import com.example.demo.result.ExceptionMsg;
 import com.example.demo.result.ResponseData;
 import com.example.demo.service.JwtUserService;
 import com.example.demo.service.UserService;
-import com.example.demo.utils.JwtUtil;
+import java.util.List;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +37,7 @@ public class UserController {
 
     @PostMapping(value = "/sign")
     @ApiOperation(value = "注册",notes = "name和pwd都是字符串")
-    public ResponseData ce(
+    public ResponseData sign(
             @ApiParam(value = "账号名称") @RequestParam("username") String username,
             @ApiParam(value = "账号密码")@RequestParam("password") String password,
             HttpServletResponse response)  {
@@ -50,10 +51,17 @@ public class UserController {
         else
             return new ResponseData(ExceptionMsg.FAILED, "注册失败,密码不能为空");
     }
-    @PostMapping(value = "/download")
-    public ResponseData download(){
-        String place="src/main/resources/static/";
-       return new ResponseData(ExceptionMsg.SUCCESS,"data");
+//    @PostMapping(value = "/download")
+//    public ResponseData download(){
+//        String place="src/main/resources/static/";
+//       return new ResponseData(ExceptionMsg.SUCCESS,"data");
+//    }
+    @GetMapping(value = "/getAllUser")
+    public ResponseData getAllUser (){
+        List<ChatUser> chatUsers=userService.findAllUser();
+        if (chatUsers==null)
+            return new ResponseData(ExceptionMsg.FAILEDFIND,null);
+        else
+            return new ResponseData(ExceptionMsg.SUCCESS,chatUsers);
     }
-
 }

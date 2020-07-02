@@ -89,7 +89,7 @@ public class MessageController {
         String owner = JWT.decode(token).getAudience().get(0);
         Message message =new Message(body,new Date(),owner,false,"normal");
         if (messageService.AddMessage(message)){
-            WebSocketServer.sendInfo(JSON.toJSONString(message));
+            WebSocketServer.sendAll(JSON.toJSONString(message));
         return new ResponseData(ExceptionMsg.SUCCESS,message);
         }
         else
