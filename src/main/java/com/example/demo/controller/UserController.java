@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.domain.ChatUser;
 import com.example.demo.result.ExceptionMsg;
 import com.example.demo.result.ResponseData;
-import com.example.demo.service.JwtUserService;
 import com.example.demo.service.UserService;
 import java.util.List;
 import io.swagger.annotations.ApiOperation;
