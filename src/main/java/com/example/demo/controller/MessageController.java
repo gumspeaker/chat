@@ -33,7 +33,7 @@ public class MessageController {
     public ResponseData handleFileUpload(@RequestParam(value = "file") MultipartFile file, HttpServletRequest req, HttpServletResponse response) throws IOException {
        // response.setCharacterEncoding("utf-8");
         String token =req.getHeader("Authorization");
-        String userName=JwtUtil.getUserNameFromJwt(token);
+        String userName=JwtUtil.verify(token);
 
         /**
          * result[0]用于判断是否上传成功，[1]用于传出错误信息或者上传的地址；

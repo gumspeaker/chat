@@ -34,5 +34,7 @@ public class JwtUtil {
             throw new RuntimeException("401");
         }
     }
-
+    public static String getUser(String token){
+        return JWT.decode(token).getAudience().
+    }
 }
