@@ -35,6 +35,6 @@ public class JwtUtil {
         }
     }
     public static String getUser(String token){
-        return JWT.decode(token).getAudience().
+        return JWT.decode(token).getAudience().get(0);
     }
 }

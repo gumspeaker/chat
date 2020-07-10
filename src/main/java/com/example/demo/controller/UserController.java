@@ -1,10 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.Anotation.PassToken;
 import com.example.demo.domain.ChatUser;
 import com.example.demo.result.ExceptionMsg;
 import com.example.demo.result.ResponseData;
 import com.example.demo.service.UserService;
 import java.util.List;
+
+import com.example.demo.utils.JwtUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +24,24 @@ public class UserController {
     UserService userService;
     @PostMapping(value = "/login")
     @ApiOperation(value = "登录",notes = "name和pwd都是字符串")
+    @PassToken
     public ResponseData login(
             @ApiParam(value = "账号名称") @RequestParam("username") String username,
-            @ApiParam(value = "账号密码")@RequestParam("password") String password)  {
+            @ApiParam(value = "账号密码")@RequestParam("password") String password,
+            HttpServletResponse response)  {
                 ChatUser loginChatUser = userService.Login(username,password);
+
                 if (loginChatUser !=null) {
-                    return new ResponseData(ExceptionMsg.SUCCESS, loginChatUser);
+                 String token = JwtUtil.getToken(loginChatUser);
+//                    response.addHeader("Authorization",token);
+                    return new ResponseData(ExceptionMsg.SUCCESS, new String[]{loginChatUser.getUsername(),token});
                 }
                 else
                     return new ResponseData(ExceptionMsg.FAILED, "error");
     }
 
     @PostMapping(value = "/sign")
+    @PassToken
     @ApiOperation(value = "注册",notes = "name和pwd都是字符串")
     public ResponseData sign(
             @ApiParam(value = "账号名称") @RequestParam("username") String username,
@@ -61,5 +70,13 @@ public class UserController {
             return new ResponseData(ExceptionMsg.FAILEDFIND,null);
         else
             return new ResponseData(ExceptionMsg.SUCCESS,chatUsers);
+    }
+    @PostMapping(value = "/checkUser")
+    public ResponseData checkUser(@RequestParam String token,@RequestParam String username){
+            ChatUser chatUser=userService.GetUserByName(username);
+            String userName=JwtUtil.verify(token,chatUser);
+            if (userName==null)
+                return new ResponseData(ExceptionMsg.FAILEDFIND,"重新登录");
+        return new ResponseData(ExceptionMsg.SUCCESS,userName);
     }
 }
