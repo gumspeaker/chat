@@ -28,10 +28,10 @@ public class SwaggerConfig<Docker> {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 //页面标题
-                .title("Spring Boot Swagger2 构建RESTful API")
+                .title("我的接口（bug）RESTful API合集")
                 //条款地址
                 .termsOfServiceUrl("http://localhost:8099/")
-                .contact("zwd")
+                .contact("徐志豪")
                 .version("1.0")
                 //描述
                 .description("API 描述")

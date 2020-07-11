@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class User implements Serializable {
+public class ChatUser implements Serializable {
     private int id;
     private String username;
     private String password;
@@ -13,7 +13,7 @@ public class User implements Serializable {
     private String userPhone;
     private String role;
 
-    public User(String username, String password) {
+    public ChatUser(String username, String password) {
         this.username = username;
         this.password = password;
     }
