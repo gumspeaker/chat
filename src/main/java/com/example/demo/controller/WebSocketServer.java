@@ -75,4 +75,7 @@ public class WebSocketServer {
             sessionEntry.getValue().getAsyncRemote().sendText(message);
         }
     }
+    static void getOnline(){
+
+    }
 }

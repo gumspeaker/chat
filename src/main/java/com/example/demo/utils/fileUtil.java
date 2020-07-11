@@ -13,7 +13,7 @@ public class fileUtil {
     public static String[] saveImg(MultipartFile file, String path) throws IOException {
          String fileName = file.getOriginalFilename();
         String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
-        String newName = UUID.randomUUID() + suffixName;
+        String newName = UUID.randomUUID() + ".png";
         File dest = new File(path + newName);
         if (!file.isEmpty()) {
             try {
