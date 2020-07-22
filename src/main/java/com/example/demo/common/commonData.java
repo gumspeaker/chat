@@ -12,6 +12,6 @@ import javax.validation.Valid;
 @Component
 public class commonData {
     public static final int pageSize = 10;
-    public static   String RootPath="src/main/resources/static/";
-    //public static   String RootPath="/usr/local/pic/";
+    public static   String ROOT_PATH="src/main/resources/static/";
+   // public static   String ROOT_PATH ="/usr/local/pic/";
 }
